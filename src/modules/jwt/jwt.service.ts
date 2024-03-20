@@ -32,11 +32,11 @@ export class JwtService extends NestJwtService {
     } catch (e: any) {
       if (e.name === 'TokenExpiredError') {
         throw new UnauthorizedException(
-          'The reset password link has expired. Please click the link below to reset your password again.',
+          'Срок действия ссылки для сброса пароля истек. Пожалуйста, нажмите на ссылку ниже, чтобы снова сбросить пароль.',
         );
       } else {
         throw new UnauthorizedException(
-          'Invalid reset password identification token. Please use the link provided to reset your password.',
+          'Неверный идентификационный ключ для сброса пароля. Пожалуйста, воспользуйтесь ссылкой, чтобы сбросить пароль.',
         );
       }
     }

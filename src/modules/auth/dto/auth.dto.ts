@@ -8,86 +8,98 @@ import {
 } from 'class-validator';
 
 export class LoginDto {
-  @IsNotEmpty({ message: 'Email or username cannot be empty' })
-  @IsString({ message: 'Invalid email or username format' })
+  @IsNotEmpty({
+    message: 'Электронная почта или имя пользователя не могут быть пустыми',
+  })
+  @IsString({
+    message: 'Неверный формат электронной почты или имени пользователя',
+  })
   emailOrUsername: string;
 
-  @IsNotEmpty({ message: 'Password cannot be empty' })
-  @IsString({ message: 'Password must be a string' })
-  @MinLength(8, { message: 'Password must be at least 8 characters long' })
-  @MaxLength(16, { message: 'Password cannot be longer than 16 characters' })
+  @IsNotEmpty({ message: 'Пароль не может быть пустым' })
+  @IsString({ message: 'Пароль должен быть строкой' })
+  @MinLength(8, {
+    message: 'Пароль должен состоять не менее чем из 8 символов',
+  })
+  @MaxLength(16, { message: 'Пароль не может быть длиннее 16 символов' })
   password: string;
 }
 
 export class RegisterDto {
-  @IsNotEmpty({ message: 'First Name cannot be empty' })
-  @IsString({ message: 'First Name must be a string' })
-  @MinLength(2, { message: 'First Name must be at least 2 characters long' })
-  @MaxLength(64, { message: 'First Name cannot be longer than 50 characters' })
+  @IsNotEmpty({ message: 'Имя не может быть пустым' })
+  @IsString({ message: 'Имя должно быть строкой' })
+  @MinLength(2, { message: 'Имя должно содержать не менее 2 символов' })
+  @MaxLength(64, { message: 'Имя не может быть длиннее 64 символов' })
   firstName: string;
 
-  @IsNotEmpty({ message: 'Last Name cannot be empty' })
-  @IsString({ message: 'Last Name must be a string' })
-  @MinLength(2, { message: 'Last Name must be at least 2 characters long' })
-  @MaxLength(64, { message: 'Last Name cannot be longer than 50 characters' })
+  @IsNotEmpty({ message: 'Фамилия не может быть пустой' })
+  @IsString({ message: 'Фамилия должна быть строкой' })
+  @MinLength(2, { message: 'Фамилия должна содержать не менее 2 символов' })
+  @MaxLength(64, { message: 'Фамилия не может быть длиннее 64 символов' })
   lastName: string;
 
-  @IsNotEmpty({ message: 'Email cannot be empty' })
-  @IsEmail({}, { message: 'Invalid email format' })
+  @IsNotEmpty({ message: 'Электронная почта не может быть пустой' })
+  @IsEmail({}, { message: 'Неверный формат электронной почты' })
   email: string;
 
-  @IsNotEmpty({ message: 'Password cannot be empty' })
-  @IsString({ message: 'Password must be a string' })
-  @MinLength(8, { message: 'Password must be at least 8 characters long' })
-  @MaxLength(16, { message: 'Password cannot be longer than 16 characters' })
+  @IsNotEmpty({ message: 'Пароль не может быть пустым' })
+  @IsString({ message: 'Пароль должен быть строкой' })
+  @MinLength(8, {
+    message: 'Пароль должен состоять не менее чем из 8 символов',
+  })
+  @MaxLength(16, { message: 'Пароль не может быть длиннее 16 символов' })
   password: string;
 }
 
 export class EditMeDto {
-  @IsOptional()
-  @IsNotEmpty({ message: 'First Name cannot be empty' })
-  @IsString({ message: 'First Name must be a string' })
-  @MinLength(2, { message: 'First Name must be at least 2 characters long' })
-  @MaxLength(64, { message: 'First Name cannot be longer than 50 characters' })
-  firstName?: string;
+  @IsNotEmpty({ message: 'Имя не может быть пустым' })
+  @IsString({ message: 'Имя должно быть строкой' })
+  @MinLength(2, { message: 'Имя должно содержать не менее 2 символов' })
+  @MaxLength(64, { message: 'Имя не может быть длиннее 64 символов' })
+  firstName: string;
+
+  @IsNotEmpty({ message: 'Фамилия не может быть пустой' })
+  @IsString({ message: 'Фамилия должна быть строкой' })
+  @MinLength(2, { message: 'Фамилия должна содержать не менее 2 символов' })
+  @MaxLength(64, { message: 'Фамилия не может быть длиннее 64 символов' })
+  lastName: string;
 
   @IsOptional()
-  @IsNotEmpty({ message: 'Last Name cannot be empty' })
-  @IsString({ message: 'Last Name must be a string' })
-  @MinLength(2, { message: 'Last Name must be at least 2 characters long' })
-  @MaxLength(64, { message: 'Last Name cannot be longer than 50 characters' })
-  lastName?: string;
-
-  @IsOptional()
-  @IsNotEmpty({ message: 'Username cannot be empty' })
-  @IsString({ message: 'Username must be a string' })
-  @MinLength(3, { message: 'Username must be at least 3 characters long' })
-  @MaxLength(80, { message: 'Username cannot be longer than 80 characters' })
+  @IsNotEmpty({ message: 'Имя пользователя не может быть пустым' })
+  @IsString({ message: 'Имя пользователя должно быть строкой' })
+  @MinLength(3, {
+    message: 'Имя пользователя должно содержать не менее 3 символов',
+  })
+  @MaxLength(80, {
+    message: 'Имя пользователя не может быть длиннее 80 символов',
+  })
   username?: string;
 }
 
 export class EmailVerificationDto {
-  @IsNotEmpty({ message: 'Code cannot be empty' })
-  @IsString({ message: 'Code must be a string' })
-  @MinLength(6, { message: 'Code must be exactly six digits' })
-  @MaxLength(6, { message: 'Code must be exactly six digits' })
+  @IsNotEmpty({ message: 'Код не может быть пустым' })
+  @IsString({ message: 'Код должен быть строкой' })
+  @MinLength(6, { message: 'Код должен состоять ровно из шести цифр' })
+  @MaxLength(6, { message: 'Код должен состоять ровно из шести цифр' })
   code: string;
 }
 
 export class ForgotPasswordDto {
-  @IsNotEmpty({ message: 'Email cannot be empty' })
-  @IsEmail({}, { message: 'Invalid email format' })
+  @IsNotEmpty({ message: 'Электронная почта не может быть пустой' })
+  @IsEmail({}, { message: 'Неверный формат электронной почты' })
   email: string;
 }
 
 export class ResetPasswordDto {
-  @IsNotEmpty({ message: 'Identification token cannot be empty' })
-  @IsString({ message: 'Identification token must be a string' })
+  @IsNotEmpty({ message: 'Идентификационный ключ не может быть пустым' })
+  @IsString({ message: 'Идентификационный ключ должен быть строкой' })
   identificationToken: string;
 
-  @IsNotEmpty({ message: 'Password cannot be empty' })
-  @IsString({ message: 'Password must be a string' })
-  @MinLength(8, { message: 'Password must be at least 8 characters long' })
-  @MaxLength(16, { message: 'Password cannot be longer than 16 characters' })
+  @IsNotEmpty({ message: 'Пароль не может быть пустым' })
+  @IsString({ message: 'Пароль должен быть строкой' })
+  @MinLength(8, {
+    message: 'Пароль должен состоять не менее чем из 8 символов',
+  })
+  @MaxLength(16, { message: 'Пароль не может быть длиннее 16 символов' })
   password: string;
 }

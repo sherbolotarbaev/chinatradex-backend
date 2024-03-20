@@ -49,7 +49,7 @@ export class SupabaseService {
       return data.path;
     } catch (e: any) {
       console.error('Error uploading file to Supabase: ', e.message);
-      throw new ServiceUnavailableException('Failed to upload file');
+      throw new ServiceUnavailableException('Не удалось загрузить файл');
     }
   }
 
@@ -57,7 +57,7 @@ export class SupabaseService {
     const maxSize = 15 * 1024 * 1024; // 15 MB
 
     if (file.size > maxSize) {
-      throw new BadRequestException('File size exceeds the 15 MB limit');
+      throw new BadRequestException('Размер файла превышает ограничение в 15 МБ');
     }
 
     const filename = this.generateUniqueFileName(file.originalname, userId);

@@ -9,30 +9,32 @@ import {
 } from 'class-validator';
 
 export class CreateUserDto {
-  @IsNotEmpty({ message: 'First Name cannot be empty' })
-  @IsString({ message: 'First Name must be a string' })
-  @MinLength(2, { message: 'First Name must be at least 2 characters long' })
-  @MaxLength(50, { message: 'First Name cannot be longer than 50 characters' })
+  @IsNotEmpty({ message: 'Имя не может быть пустым' })
+  @IsString({ message: 'Имя должно быть строкой' })
+  @MinLength(2, { message: 'Имя должно содержать не менее 2 символов' })
+  @MaxLength(64, { message: 'Имя не может быть длиннее 64 символов' })
   firstName: string;
 
-  @IsNotEmpty({ message: 'Last Name cannot be empty' })
-  @IsString({ message: 'Last Name must be a string' })
-  @MinLength(2, { message: 'Last Name must be at least 2 characters long' })
-  @MaxLength(50, { message: 'Last Name cannot be longer than 50 characters' })
+  @IsNotEmpty({ message: 'Фамилия не может быть пустой' })
+  @IsString({ message: 'Фамилия должна быть строкой' })
+  @MinLength(2, { message: 'Фамилия должна содержать не менее 2 символов' })
+  @MaxLength(64, { message: 'Фамилия не может быть длиннее 64 символов' })
   lastName: string;
 
-  @IsNotEmpty({ message: 'Email cannot be empty' })
-  @IsEmail({}, { message: 'Invalid email format' })
+  @IsNotEmpty({ message: 'Электронная почта не может быть пустой' })
+  @IsEmail({}, { message: 'Неверный формат электронной почты' })
   email: string;
 
-  @IsNotEmpty({ message: 'Password cannot be empty' })
-  @IsString({ message: 'Password must be a string' })
-  @MinLength(8, { message: 'Password must be at least 8 characters long' })
-  @MaxLength(16, { message: 'Password cannot be longer than 16 characters' })
+  @IsNotEmpty({ message: 'Пароль не может быть пустым' })
+  @IsString({ message: 'Пароль должен быть строкой' })
+  @MinLength(8, {
+    message: 'Пароль должен состоять не менее чем из 8 символов',
+  })
+  @MaxLength(16, { message: 'Пароль не может быть длиннее 16 символов' })
   password: string;
 
   @IsOptional()
-  @IsNotEmpty({ message: 'Photo cannot be empty' })
-  @IsString({ message: 'Photo must be a string' })
+  @IsNotEmpty({ message: 'Фото не может быть пустым' })
+  @IsString({ message: 'Фотография должна быть строкой' })
   photo?: string;
 }

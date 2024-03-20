@@ -19,7 +19,7 @@ export class UsersService {
   async getUsers(user: User, query: string) {
     if (user.role === 'USER') {
       throw new ForbiddenException(
-        'You do not have the necessary permission to access users information',
+        'У вас нет необходимого разрешения на доступ к информации о пользователях',
       );
     }
 
@@ -72,13 +72,13 @@ export class UsersService {
   async getUser(user: User, username: string) {
     if (user.role === 'USER') {
       throw new ForbiddenException(
-        'You do not have the necessary permission to access user information',
+        'У вас нет необходимого разрешения на доступ к информации о пользователе',
       );
     }
 
     // Ensure that username is a string
     if (!isNaN(parseInt(username))) {
-      throw new ConflictException('Parameter username must be a string');
+      throw new ConflictException('Параметр username должен быть строкой');
     }
 
     try {
@@ -92,20 +92,20 @@ export class UsersService {
   async deleteUser(user: User, username: string) {
     if (user.role === 'USER') {
       throw new ForbiddenException(
-        'You do not have the necessary permission to delete a user',
+        'У вас нет необходимых прав для удаления пользователя',
       );
     }
 
     // Ensure that username is a string
     if (!isNaN(parseInt(username))) {
-      throw new ConflictException('Parameter username must be a string');
+      throw new ConflictException('Параметр username должен быть строкой');
     }
 
     const dbUser = await this.findByUsername(username);
 
     if (dbUser.id === user.id) {
       throw new ForbiddenException(
-        `You can't delete yourself, please inform someone with a Admin role`,
+        `Вы не можете удалить себя, пожалуйста, сообщите кому-нибудь с ролью администратора`,
       );
     }
 
@@ -137,13 +137,15 @@ export class UsersService {
     });
 
     if (existingUser) {
-      throw new ConflictException('User already exists');
+      throw new ConflictException('Пользователь уже существует');
     }
 
     const isEmailValid = await verifyEmail(email.toLowerCase());
 
     if (!isEmailValid) {
-      throw new BadRequestException('Your email is not valid');
+      throw new BadRequestException(
+        'Ваш адрес электронной почты недействителен',
+      );
     }
 
     try {
@@ -188,11 +190,11 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new UnauthorizedException("User doesn't exist");
+      throw new UnauthorizedException('Пользователь не существует');
     }
 
     if (!user.isActive) {
-      throw new ForbiddenException('User has been deactivated');
+      throw new ForbiddenException('Пользователь был деактивирован');
     }
 
     try {
@@ -226,11 +228,11 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new UnauthorizedException("User doesn't exist");
+      throw new UnauthorizedException('Пользователь не существует');
     }
 
     if (!user.isActive) {
-      throw new ForbiddenException('User has been deactivated');
+      throw new ForbiddenException('Пользователь был деактивирован');
     }
 
     try {
@@ -261,11 +263,11 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new UnauthorizedException("User doesn't exist");
+      throw new UnauthorizedException('Пользователь не существует');
     }
 
     if (!user.isActive) {
-      throw new ForbiddenException('User has been deactivated');
+      throw new ForbiddenException('Пользователь был деактивирован');
     }
 
     try {
@@ -296,11 +298,11 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new UnauthorizedException("User doesn't exist");
+      throw new UnauthorizedException('Пользователь не существует');
     }
 
     if (!user.isActive) {
-      throw new ForbiddenException('User has been deactivated');
+      throw new ForbiddenException('Пользователь был деактивирован');
     }
 
     try {

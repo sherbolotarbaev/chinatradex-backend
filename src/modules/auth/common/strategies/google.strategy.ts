@@ -36,7 +36,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
 
     if ('error' in validate) {
       if (validate.status === 403) {
-        return done(new ForbiddenException('User has been deactivated'));
+        return done(new ForbiddenException('Пользователь был деактивирован'));
       }
     }
 

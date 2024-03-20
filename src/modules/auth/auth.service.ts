@@ -102,7 +102,7 @@ export class AuthService {
     const comparedPassword = await compare(password, user.password);
 
     if (!comparedPassword) {
-      throw new UnauthorizedException('Invalid password');
+      throw new UnauthorizedException('Неверный пароль');
     }
 
     if (!user.isVerified || !user.verificationToken) {
@@ -143,7 +143,7 @@ export class AuthService {
       });
 
       if (existingUsername) {
-        throw new ConflictException('Username already taken');
+        throw new ConflictException('Имя пользователя занято');
       }
     }
 
@@ -168,14 +168,14 @@ export class AuthService {
 
   async emailVerification(user: User, { code }: EmailVerificationDto) {
     if (user.isVerified) {
-      throw new BadRequestException('User has already been verified');
+      throw new BadRequestException('Пользователь уже верифицирован');
     }
 
     try {
       const comparedCode = await compare(code, user.verificationToken);
 
       if (!comparedCode) {
-        throw new ConflictException(`Code doesn't match`);
+        throw new ConflictException(`Код не совпадает`);
       }
 
       await this.prisma.user.update({
@@ -214,17 +214,17 @@ export class AuthService {
       this.mailerService.sendMail({
         to: user.email,
         from: process.env.MAILER_USER,
-        subject: 'Password reset',
+        subject: 'Сброс пароля',
         html: `
-            <h2>Hey ${user.firstName}</h2>
-            <p>To recover your password, please use this <a target="_self" href="${forgotLink}">link</a>.</p>
+            <h2>Привет ${user.firstName}!</h2>
+            <p>Чтобы восстановить пароль, воспользуйтесь следующей <a target="_self" href="${forgotLink}">ссылкой</a>.</p>
         `,
       }),
     ]);
 
     try {
       return {
-        message: `Password reset link has been sent to ${user.email}`,
+        message: `Ссылка для сброса пароля была отправлена ${user.email}`,
       };
     } catch (e: any) {
       console.error(e);
@@ -240,7 +240,7 @@ export class AuthService {
     const hashedPassword = await hash(password);
 
     if (!userId) {
-      throw new UnauthorizedException('User not found');
+      throw new UnauthorizedException('Пользователь не найден');
     }
 
     await this.prisma.user.update({
@@ -254,7 +254,7 @@ export class AuthService {
 
     try {
       return {
-        message: 'Your password has been successfully updated',
+        message: 'Ваш пароль был успешно обновлен',
       };
     } catch (e: any) {
       console.error(e);
@@ -287,18 +287,18 @@ export class AuthService {
       this.mailerService.sendMail({
         to: userEmail,
         from: process.env.MAILER_USER,
-        subject: 'Verification Code',
+        subject: 'Код верификации',
         html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background-color: #f8f8f8; padding: 20px;">
-            <h2 style="color: #333;">Hey ${userName},</h2>
-            <p style="font-size: 16px;">Your verification code is:</p>
+            <h2 style="color: #333;">Привет ${userName},</h2>
+            <p style="font-size: 16px;">Ваш код верификации:</p>
             <div style="background-color: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 5px; margin-top: 10px;">
               <h3 style="margin: 0; font-size: 24px; color: #007bff;">${code}</h3>
             </div>
-            <p style="font-size: 14px; margin-top: 15px;">Please use this code to verify your email address.</p>
+            <p style="font-size: 14px; margin-top: 15px;">Пожалуйста, используйте этот код для проверки электронной почты.</p>
           </div>
-          <p style="font-size: 14px; color: #666; margin-top: 20px;">This email was sent automatically. Please do not reply.</p>
+          <p style="font-size: 14px; color: #666; margin-top: 20px;">Это письмо было отправлено автоматически. Пожалуйста, не отвечайте.</p>
         </div>
         `,
       }),

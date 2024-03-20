@@ -16,7 +16,7 @@ export class UploadService {
 
   async uploadPhoto(user: User, file: Express.Multer.File) {
     if (!file) {
-      throw new NotFoundException('File not found');
+      throw new NotFoundException('Файл не найден');
     }
 
     const fileMimeTypes = [
@@ -27,7 +27,7 @@ export class UploadService {
     ];
 
     if (!fileMimeTypes.includes(file.mimetype)) {
-      throw new BadRequestException('Only image files are allowed');
+      throw new BadRequestException('Допускаются только файлы изображений');
     }
 
     const filename = await this.supabaseService.uploadPhoto(file, user.id);
