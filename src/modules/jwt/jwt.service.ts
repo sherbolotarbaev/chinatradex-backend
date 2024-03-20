@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadGatewayException,
+  BadRequestException,
+  Injectable,
+} from '@nestjs/common';
 import { JwtSignOptions, JwtService as NestJwtService } from '@nestjs/jwt';
 
 import { COOKIE_MAX_AGE } from '../auth/common/constants';
@@ -26,7 +30,7 @@ export class JwtService extends NestJwtService {
 
   async compareResetPasswordToken(identificationToken: string) {
     try {
-      return this.verifyAsync(identificationToken, {
+      return await this.verifyAsync(identificationToken, {
         secret: process.env.JWT_SECRET_KEY,
       });
     } catch (e: any) {
@@ -35,7 +39,7 @@ export class JwtService extends NestJwtService {
           'Срок действия ссылки для сброса пароля истек. Пожалуйста, нажмите на ссылку ниже, чтобы снова сбросить пароль.',
         );
       } else {
-        throw new BadRequestException(
+        throw new BadGatewayException(
           'Неверный идентификационный ключ для сброса пароля. Пожалуйста, воспользуйтесь ссылкой, чтобы сбросить пароль.',
         );
       }
