@@ -1,9 +1,9 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';
-import connectPgSimple from 'connect-pg-simple'; // use * as connectPgSimple for local
-import cookieParser from 'cookie-parser'; // use * as cookieParser for local
-import bodyParser from 'body-parser'; // use * as bodyParser for local
-import session from 'express-session'; // use * as session for local
+import connectPgSimple from 'connect-pg-simple';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+import session from 'express-session';
 import helmet from 'helmet';
 
 import { AppModule } from './app.module';
@@ -21,11 +21,8 @@ export function setup(app: INestApplication): INestApplication {
   );
 
   app.enableCors({
-    origin: [
-      'http://localhost:3000',
-      `${process.env.FRONTEND_BASE_URL}`,
-    ],
-    exposedHeaders: ['Authorization'],
+    origin: ['http://localhost:3000', `${process.env.FRONTEND_BASE_URL}`],
+    exposedHeaders: ['Authorization', 'Cookie'],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     credentials: true,
   });
