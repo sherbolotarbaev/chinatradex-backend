@@ -183,7 +183,6 @@ export class UsersService {
             timezone: true,
             lastVisit: true,
           },
-          take: 1,
         },
       },
     });
@@ -222,7 +221,6 @@ export class UsersService {
             timezone: true,
             lastVisit: true,
           },
-          take: 1,
         },
       },
     });
@@ -258,7 +256,6 @@ export class UsersService {
             timezone: true,
             lastVisit: true,
           },
-          take: 1,
         },
       },
     });
@@ -294,7 +291,6 @@ export class UsersService {
             timezone: true,
             lastVisit: true,
           },
-          take: 1,
         },
       },
     });
