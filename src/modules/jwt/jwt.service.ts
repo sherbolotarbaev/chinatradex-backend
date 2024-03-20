@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtSignOptions, JwtService as NestJwtService } from '@nestjs/jwt';
 
 import { COOKIE_MAX_AGE } from '../auth/common/constants';
@@ -31,11 +31,11 @@ export class JwtService extends NestJwtService {
       });
     } catch (e: any) {
       if (e.name === 'TokenExpiredError') {
-        throw new UnauthorizedException(
+        throw new BadRequestException(
           'Срок действия ссылки для сброса пароля истек. Пожалуйста, нажмите на ссылку ниже, чтобы снова сбросить пароль.',
         );
       } else {
-        throw new UnauthorizedException(
+        throw new BadRequestException(
           'Неверный идентификационный ключ для сброса пароля. Пожалуйста, воспользуйтесь ссылкой, чтобы сбросить пароль.',
         );
       }
