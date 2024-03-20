@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+model User {
+  id   Int      @id @default(autoincrement())
+  role UserRole @default(USER)
+
+  firstName String  @db.VarChar(64)
+  lastName  String  @db.VarChar(64)
+  email     String  @unique
+  username  String  @unique
+  photo     String?
+  password  String
+
+  metaData UserMetaData[]
+
+  resetPasswordToken String?
+  verificationToken  String?
+
+  isActive   Boolean @default(true)
+  isVerified Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserMetaData {
+  userId Int
+
+  ip String
+
+  city     String?
+  region   String?
+  country  String?
+  timezone String?
+
+  lastVisit DateTime
+
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([userId])
+}
