@@ -175,9 +175,6 @@ export class UsersService {
       },
       include: {
         metaData: {
-          where: {
-            userId: id,
-          },
           select: {
             ip: true,
             city: true,
@@ -186,6 +183,7 @@ export class UsersService {
             timezone: true,
             lastVisit: true,
           },
+          take: 1,
         },
       },
     });
@@ -214,6 +212,19 @@ export class UsersService {
           { username: emailOrUsername.toLowerCase() },
         ],
       },
+      include: {
+        metaData: {
+          select: {
+            ip: true,
+            city: true,
+            region: true,
+            country: true,
+            timezone: true,
+            lastVisit: true,
+          },
+          take: 1,
+        },
+      },
     });
 
     if (!user) {
@@ -237,6 +248,19 @@ export class UsersService {
       where: {
         email: email.toLowerCase(),
       },
+      include: {
+        metaData: {
+          select: {
+            ip: true,
+            city: true,
+            region: true,
+            country: true,
+            timezone: true,
+            lastVisit: true,
+          },
+          take: 1,
+        },
+      },
     });
 
     if (!user) {
@@ -259,6 +283,19 @@ export class UsersService {
     const user = await this.prisma.user.findUnique({
       where: {
         username: username.toLowerCase(),
+      },
+      include: {
+        metaData: {
+          select: {
+            ip: true,
+            city: true,
+            region: true,
+            country: true,
+            timezone: true,
+            lastVisit: true,
+          },
+          take: 1,
+        },
       },
     });
 
