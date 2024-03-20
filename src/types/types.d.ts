@@ -13,19 +13,8 @@ type User = {
   verificationToken?: string;
   isActive: boolean;
   isVerified: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-type Message = {
-  id: number;
-  userId: number;
-  user: User;
-  text: string;
-  ai?: boolean;
-  audioSource?: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: DateTime;
+  updatedAt: DateTime;
 };
 
 type LocationData = {
@@ -35,41 +24,12 @@ type LocationData = {
   timezone: string;
 };
 
-type Views = {
-  id: number;
-  count: number;
-  lastViewAt: string;
-};
-
-type EmailOtp = {
-  id: number;
-  email: string;
-  otp: string;
-  expires: number;
-  isVerified: boolean;
-  createdAt: string;
-};
-
-type Chat = {
-  id: number;
+type UserMetaData = {
   userId: number;
-  title: string;
-  conversations: Conversation[];
-  user: User;
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
-};
-
-type ConversationRole = 'USER' | 'ASSISTANT' | 'SYSTEM';
-
-type Conversation = {
-  id: number;
-  userId: number;
-  chatId: number;
-  role: ConversationRole;
-  content: string;
-  user: User;
-  chat: Chat;
-  createdAt: string;
+  ip: string;
+  city?: string;
+  region?: string;
+  country?: string;
+  timezone?: string;
+  lastVisit: DateTime;
 };
