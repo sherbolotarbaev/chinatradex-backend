@@ -174,7 +174,16 @@ export class UsersService {
         id,
       },
       include: {
-        metaData: true,
+        metaData: {
+          select: {
+            ip: true,
+            city: true,
+            region: true,
+            country: true,
+            timezone: true,
+            lastVisit: true,
+          },
+        },
       },
     });
 
@@ -203,7 +212,16 @@ export class UsersService {
         ],
       },
       include: {
-        metaData: true,
+        metaData: {
+          select: {
+            ip: true,
+            city: true,
+            region: true,
+            country: true,
+            timezone: true,
+            lastVisit: true,
+          },
+        },
       },
     });
 
@@ -229,7 +247,16 @@ export class UsersService {
         email: email.toLowerCase(),
       },
       include: {
-        metaData: true,
+        metaData: {
+          select: {
+            ip: true,
+            city: true,
+            region: true,
+            country: true,
+            timezone: true,
+            lastVisit: true,
+          },
+        },
       },
     });
 
@@ -255,7 +282,16 @@ export class UsersService {
         username: username.toLowerCase(),
       },
       include: {
-        metaData: true,
+        metaData: {
+          select: {
+            ip: true,
+            city: true,
+            region: true,
+            country: true,
+            timezone: true,
+            lastVisit: true,
+          },
+        },
       },
     });
 
