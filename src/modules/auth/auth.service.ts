@@ -36,12 +36,15 @@ export class AuthService {
     private readonly mailerService: MailerService,
   ) {}
 
-  async googleOAuthValidate({
-    firstName,
-    lastName,
-    photo,
-    email,
-  }: GoogleUser): Promise<User | { error: boolean; status: number }> {
+  async googleOAuth(
+    {
+      // firstName,
+      // lastName,
+      // photo,
+      email,
+    }: GoogleUser,
+    response: Response,
+  ) {
     const existingUser = await this.prisma.user.findUnique({
       where: {
         email,
@@ -58,7 +61,9 @@ export class AuthService {
       }
 
       if (!existingUser.isActive) {
-        return { error: true, status: 403 };
+        return response
+          .status(HttpStatus.FORBIDDEN)
+          .redirect(`${process.env.FRONTEND_BASE_URL}/login?error=403`);
       }
 
       try {
@@ -69,7 +74,9 @@ export class AuthService {
       }
     }
 
-    return { error: true, status: 401 };
+    return response
+      .status(HttpStatus.UNAUTHORIZED)
+      .redirect(`${process.env.FRONTEND_BASE_URL}/login?error=401`);
 
     // const user = await this.usersService.createUser({
     //   firstName,

@@ -27,6 +27,8 @@ import {
   Public,
 } from './common';
 
+import { GoogleUser } from './common/interface';
+
 import {
   RegisterDto,
   EditMeDto,
@@ -46,8 +48,11 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(GoogleOauthGuard)
   @UseInterceptors(SessionInterceptor)
-  async googleOAuthCallback(@User() user: User) {
-    return user;
+  async googleOAuthCallback(
+    @User() user: GoogleUser,
+    @Res() response: Response,
+  ) {
+    return await this.authService.googleOAuth(user, response);
   }
 
   @Public()
