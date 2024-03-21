@@ -137,7 +137,7 @@ export class AuthService {
   }
 
   async logout(request: Request, response: Response) {
-    return request.session.destroy((e: any) => {
+    return request.logOut((e: any) => {
       if (e) {
         return response
           .status(HttpStatus.INTERNAL_SERVER_ERROR)
