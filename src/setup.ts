@@ -4,6 +4,7 @@ import connectPgSimple from 'connect-pg-simple';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import session from 'express-session';
+import passport from 'passport';
 import helmet from 'helmet';
 
 import { AppModule } from './app.module';
@@ -54,6 +55,9 @@ export function setup(app: INestApplication): INestApplication {
       },
     }),
   );
+
+  app.use(passport.initialize());
+  app.use(passport.session());
 
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
