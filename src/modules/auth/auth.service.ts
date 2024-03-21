@@ -1,9 +1,11 @@
 import {
   BadRequestException,
   ConflictException,
+  HttpStatus,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+import type { Request, Response } from 'express';
 
 import { UsersService } from '../users/users.service';
 import { compare, hash } from '../../utils/bcrypt';
@@ -132,6 +134,21 @@ export class AuthService {
       console.error(e);
       throw new Error(e.message);
     }
+  }
+
+  async logout(request: Request, response: Response) {
+    return request.logout((e: any) => {
+      if (e) {
+        return response
+          .status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .send({ success: false, message: e.message });
+      }
+
+      return response
+        .status(HttpStatus.OK)
+        .clearCookie('session')
+        .send({ success: true, message: 'Успешный выход из системы' });
+    });
   }
 
   async editMe(user: User, { firstName, lastName, username }: EditMeDto) {
