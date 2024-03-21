@@ -70,7 +70,7 @@ export class AuthController {
   @Get('logout')
   @HttpCode(HttpStatus.OK)
   async logout(@Req() request: Request, @Res() response: Response) {
-    request.logout(async (e: any) => {
+    request.logout((e: any) => {
       if (e) {
         return response
           .status(HttpStatus.INTERNAL_SERVER_ERROR)
