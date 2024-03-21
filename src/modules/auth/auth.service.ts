@@ -3,6 +3,7 @@ import {
   ConflictException,
   HttpStatus,
   Injectable,
+  InternalServerErrorException,
   UnauthorizedException,
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
@@ -139,15 +140,13 @@ export class AuthService {
   async logout(request: Request, response: Response) {
     return request.logOut((e: any) => {
       if (e) {
-        return response
-          .status(HttpStatus.INTERNAL_SERVER_ERROR)
-          .send({ success: false, message: e.message });
+        throw new InternalServerErrorException('Не удалось выйти из системы');
       }
 
       return response
         .status(HttpStatus.OK)
         .clearCookie('session')
-        .send({ success: true, message: 'Успешный выход из системы' });
+        .redirect(process.env.FRONTEND_BASE_URL);
     });
   }
 
