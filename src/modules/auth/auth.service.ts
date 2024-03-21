@@ -69,9 +69,7 @@ export class AuthService {
       }
     }
 
-    if (!existingUser.isActive) {
-      return { error: true, status: 401 };
-    }
+    return { error: true, status: 401 };
 
     // const user = await this.usersService.createUser({
     //   firstName,
