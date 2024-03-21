@@ -40,11 +40,13 @@ export function setup(app: INestApplication): INestApplication {
   app.use(
     session({
       secret: process.env.JWT_SECRET_KEY,
-      resave: false,
-      saveUninitialized: false,
+      resave: true,
+      saveUninitialized: true,
       store:
         process.env.NODE_ENV === 'production'
-          ? new (connectPgSimple(session))()
+          ? new (connectPgSimple(session))({
+              createTableIfMissing: true,
+            })
           : new session.MemoryStore(),
       cookie: {
         httpOnly: true,
