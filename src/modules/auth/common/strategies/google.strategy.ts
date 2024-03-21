@@ -1,4 +1,8 @@
-import { Injectable, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  ForbiddenException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, VerifyCallback, Profile } from 'passport-google-oauth20';
 
@@ -37,6 +41,10 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     if ('error' in validate) {
       if (validate.status === 403) {
         return done(new ForbiddenException('Пользователь был деактивирован'));
+      }
+
+      if (validate.status === 401) {
+        return done(new UnauthorizedException('Пользователь не существует'));
       }
     }
 

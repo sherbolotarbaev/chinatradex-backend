@@ -69,22 +69,26 @@ export class AuthService {
       }
     }
 
-    const user = await this.usersService.createUser({
-      firstName,
-      lastName,
-      email,
-      password: 'google-oauth',
-      photo,
-    });
-
-    this.sendVerificationCode(user.id, user.email, user.firstName);
-
-    try {
-      return user;
-    } catch (e: any) {
-      console.error(e);
-      throw new Error(e.message);
+    if (!existingUser.isActive) {
+      return { error: true, status: 401 };
     }
+
+    // const user = await this.usersService.createUser({
+    //   firstName,
+    //   lastName,
+    //   email,
+    //   password: 'google-oauth',
+    //   photo,
+    // });
+
+    // this.sendVerificationCode(user.id, user.email, user.firstName);
+
+    // try {
+    //   return user;
+    // } catch (e: any) {
+    //   console.error(e);
+    //   throw new Error(e.message);
+    // }
   }
 
   async register(dto: RegisterDto) {
