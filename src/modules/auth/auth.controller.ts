@@ -7,11 +7,12 @@ import {
   HttpStatus,
   Patch,
   Post,
+  Req,
   Res,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import type { Response } from 'express';
+import type { Request, Response } from 'express';
 
 import { AuthService } from './auth.service';
 
@@ -68,11 +69,19 @@ export class AuthController {
 
   @Get('logout')
   @HttpCode(HttpStatus.OK)
-  async logout(@Res() response: Response) {
-    return response
-      .status(HttpStatus.OK)
-      .clearCookie('session')
-      .send({ success: true });
+  async logout(@Req() request: Request, @Res() response: Response) {
+    request.logout(async (e: any) => {
+      if (e) {
+        return response
+          .status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .send({ success: false });
+      }
+
+      return response
+        .status(HttpStatus.OK)
+        .clearCookie('session')
+        .send({ success: true });
+    });
   }
 
   @Get('me')
