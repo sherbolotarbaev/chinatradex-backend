@@ -190,7 +190,7 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new UnauthorizedException('Пользователя не существует');
+      throw new UnauthorizedException('Пользователь не найден');
     }
 
     if (!user.isActive) {
@@ -228,7 +228,7 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new UnauthorizedException('Пользователя не существует');
+      throw new UnauthorizedException('Пользователь не найден');
     }
 
     if (!user.isActive) {
@@ -263,7 +263,7 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new UnauthorizedException('Пользователя не существует');
+      throw new UnauthorizedException('Пользователь не найден');
     }
 
     if (!user.isActive) {
