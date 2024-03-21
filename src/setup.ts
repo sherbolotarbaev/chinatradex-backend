@@ -40,8 +40,8 @@ export function setup(app: INestApplication): INestApplication {
   app.use(
     session({
       secret: process.env.JWT_SECRET_KEY,
-      resave: true,
-      saveUninitialized: true,
+      resave: false,
+      saveUninitialized: false,
       store:
         process.env.NODE_ENV === 'production'
           ? new (connectPgSimple(session))({
