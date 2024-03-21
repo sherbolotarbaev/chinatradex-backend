@@ -43,7 +43,9 @@ export class UploadService {
     });
 
     try {
-      return updatedUser;
+      return {
+        photo: updatedUser.photo
+      };
     } catch (e: any) {
       console.error(e);
       throw new Error(e.message);
