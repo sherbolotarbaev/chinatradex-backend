@@ -155,7 +155,7 @@ export class AuthService {
       return response
         .status(HttpStatus.OK)
         .clearCookie('session')
-        .redirect(process.env.FRONTEND_BASE_URL);
+        .redirect(`${process.env.FRONTEND_BASE_URL}/redirect`);
     });
   }
 
