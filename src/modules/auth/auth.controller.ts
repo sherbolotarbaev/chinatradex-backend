@@ -78,6 +78,7 @@ export class AuthController {
     return await this.authService.logout(request, response);
   }
 
+  @Public()
   @Get('session')
   @HttpCode(HttpStatus.OK)
   async session(@Req() request: Request, @Res() response: Response) {
