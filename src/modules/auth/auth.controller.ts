@@ -78,16 +78,6 @@ export class AuthController {
     return await this.authService.logout(request, response);
   }
 
-  @Public()
-  @Get('session')
-  @HttpCode(HttpStatus.OK)
-  async session(@Req() request: Request, @Res() response: Response) {
-    return response.send({
-      auth: !!request.user,
-      session: request.signedCookies['session'],
-    });
-  }
-
   @Get('me')
   @HttpCode(HttpStatus.OK)
   async getMe(@Ip() ip: string, @User() user: User) {
