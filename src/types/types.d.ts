@@ -20,9 +20,16 @@ type User = {
 type LocationData = {
   city: string;
   region: string;
-  country: string;
   timezone: string;
+  country: string;
   countryFlag: CountryFlag;
+  countryCurrency: CountryCurrency;
+  countryFlagURL: string;
+};
+
+type CountryCurrency = {
+  code: string;
+  symbol: string;
 };
 
 type CountryFlag = {
