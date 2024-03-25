@@ -1,6 +1,14 @@
-import { Public } from './modules/auth/common';
-import { Controller, Get, HttpCode, HttpStatus, Res } from '@nestjs/common';
-import type { Response } from 'express';
+import { Public, Ip } from './modules/auth/common';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Req,
+  Res,
+} from '@nestjs/common';
+import type { Request, Response } from 'express';
+import { getLocation } from './utils';
 
 @Controller()
 export class AppController {
@@ -9,7 +17,34 @@ export class AppController {
   @HttpCode(HttpStatus.OK)
   async main(@Res() response: Response) {
     return response.status(HttpStatus.OK).json({
-      message: 'OK ✅',
+      message: 'OK',
+    });
+  }
+
+  @Public()
+  @Get('ping')
+  @HttpCode(HttpStatus.OK)
+  async ping(
+    @Ip() ip: string,
+    @Req() request: Request,
+    @Res() response: Response,
+  ) {
+    let platform = request.headers['sec-ch-ua-platform']
+      ? request.headers['sec-ch-ua-platform'].toString()
+      : null;
+
+    if (platform) {
+      platform = platform.replace(/"/g, '');
+    }
+
+    const location = await getLocation(ip);
+
+    return response.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      message: 'success',
+      ip,
+      platform,
+      ...location,
     });
   }
 }
