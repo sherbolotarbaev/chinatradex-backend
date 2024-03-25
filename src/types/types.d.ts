@@ -23,13 +23,6 @@ type LocationData = {
   timezone: string;
   country: string;
   countryFlag: CountryFlag;
-  countryCurrency: CountryCurrency;
-  countryFlagURL: string;
-};
-
-type CountryCurrency = {
-  code: string;
-  symbol: string;
 };
 
 type CountryFlag = {
