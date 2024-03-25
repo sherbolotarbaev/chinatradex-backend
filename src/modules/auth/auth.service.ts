@@ -333,7 +333,7 @@ export class AuthService {
   private async setMetaData(
     userId: number,
     ip: string,
-    location: LocationData,
+    { city, country, region, timezone }: LocationData,
   ) {
     await this.prisma.userMetaData.upsert({
       where: {
@@ -342,12 +342,18 @@ export class AuthService {
       create: {
         userId,
         ip,
-        ...location,
+        city,
+        country,
+        region,
+        timezone,
         lastVisit: new Date(),
       },
       update: {
         ip,
-        ...location,
+        city,
+        country,
+        region,
+        timezone,
         lastVisit: new Date(),
       },
     });

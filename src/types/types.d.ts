@@ -22,6 +22,12 @@ type LocationData = {
   region: string;
   country: string;
   timezone: string;
+  countryFlag: CountryFlag;
+};
+
+type CountryFlag = {
+  emoji: string;
+  unicode: string;
 };
 
 type UserMetaData = {
