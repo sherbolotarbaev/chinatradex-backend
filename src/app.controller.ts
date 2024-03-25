@@ -11,6 +11,7 @@ import type { Request, Response } from 'express';
 
 import { getLocation } from './utils';
 import moment from 'moment';
+import 'moment-timezone';
 
 @Controller()
 export class AppController {
@@ -47,7 +48,7 @@ export class AppController {
       ip,
       platform,
       ...location,
-      time: moment().format('DD.MM.YYYY HH:mm:ss'),
+      time: moment().tz(location.timezone).format('DD.MM.YYYY HH:mm:ss'),
     });
   }
 }
