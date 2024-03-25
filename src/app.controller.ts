@@ -8,7 +8,9 @@ import {
   Res,
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
+
 import { getLocation } from './utils';
+import moment from 'moment';
 
 @Controller()
 export class AppController {
@@ -45,6 +47,7 @@ export class AppController {
       ip,
       platform,
       ...location,
+      time: moment().format('DD.MM.YYYY HH:mm:ss'),
     });
   }
 }
