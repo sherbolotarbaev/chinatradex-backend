@@ -43,8 +43,6 @@ export class AppController {
     const location = await getLocation(ip);
 
     return response.status(HttpStatus.OK).json({
-      statusCode: HttpStatus.OK,
-      message: 'success',
       ip,
       platform,
       ...location,
