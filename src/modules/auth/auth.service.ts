@@ -129,6 +129,19 @@ export class AuthService {
     }
   }
 
+  async logout(request: Request, response: Response) {
+    return request.logOut((e: any) => {
+      if (e) {
+        throw new InternalServerErrorException('Не удалось выйти из системы');
+      }
+
+      return response
+        .status(HttpStatus.OK)
+        .clearCookie('session')
+        .redirect(`${process.env.FRONTEND_BASE_URL}/redirect`);
+    });
+  }
+
   async getMe(ip: string, user: User) {
     const location = await getLocation(ip);
 
@@ -144,19 +157,6 @@ export class AuthService {
       console.error(e);
       throw new Error(e.message);
     }
-  }
-
-  async logout(request: Request, response: Response) {
-    return request.logOut((e: any) => {
-      if (e) {
-        throw new InternalServerErrorException('Не удалось выйти из системы');
-      }
-
-      return response
-        .status(HttpStatus.OK)
-        .clearCookie('session')
-        .redirect(`${process.env.FRONTEND_BASE_URL}/redirect`);
-    });
   }
 
   async editMe(user: User, { firstName, lastName, username }: EditMeDto) {
@@ -182,6 +182,10 @@ export class AuthService {
         username: username ? username.toLowerCase() : user.username,
       },
     });
+
+    delete updatedUser.password;
+    delete updatedUser.resetPasswordToken;
+    delete updatedUser.verificationToken;
 
     try {
       return updatedUser;
