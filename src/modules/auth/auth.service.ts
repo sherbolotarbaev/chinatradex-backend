@@ -181,6 +181,18 @@ export class AuthService {
         lastName,
         username: username ? username.toLowerCase() : user.username,
       },
+      include: {
+        metaData: {
+          select: {
+            ip: true,
+            city: true,
+            region: true,
+            country: true,
+            timezone: true,
+            lastVisit: true,
+          },
+        },
+      },
     });
 
     delete updatedUser.password;
