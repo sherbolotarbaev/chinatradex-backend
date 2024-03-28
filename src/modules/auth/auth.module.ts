@@ -58,7 +58,7 @@ export class AuthModule implements NestModule {
               : new session.MemoryStore(),
           cookie: {
             httpOnly: true,
-            signed: true,
+            // signed: true,
             sameSite: 'none',
             secure: process.env.NODE_ENV === 'production',
             maxAge: COOKIE_MAX_AGE,
