@@ -14,7 +14,7 @@ async function start() {
 
   try {
     await app.listen(port);
-    logger.log(`Server is running on: http://127.0.0.1:${port} ⚡️`);
+    logger.log(`Server is running on: http://localhost:${port} ⚡️`);
   } catch (e: any) {
     logger.error(e);
     process.exit(1);
