@@ -13,8 +13,8 @@ type User = {
   verificationToken?: string;
   isActive: boolean;
   isVerified: boolean;
-  createdAt: DateTime;
-  updatedAt: DateTime;
+  createdAt: string;
+  updatedAt: string;
 };
 
 type LocationData = {
@@ -37,5 +37,5 @@ type UserMetaData = {
   region?: string;
   country?: string;
   timezone?: string;
-  lastVisit: DateTime;
+  lastVisit: string;
 };
