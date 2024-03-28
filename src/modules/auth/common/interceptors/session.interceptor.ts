@@ -37,6 +37,8 @@ export class SessionInterceptor implements NestInterceptor {
         response.cookie('session', session, {
           httpOnly: true,
           // signed: true,
+          path: '/',
+          domain: 'chinatradex.vercel.app',
           sameSite: 'none',
           secure: process.env.NODE_ENV === 'production',
           maxAge: COOKIE_MAX_AGE,
