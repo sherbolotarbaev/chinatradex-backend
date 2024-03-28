@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
@@ -13,6 +13,10 @@ import {
   SessionSerializer,
 } from './common';
 import { COOKIE_MAX_AGE } from './common/constants';
+
+import connectPgSimple from 'connect-pg-simple';
+import session from 'express-session';
+import passport from 'passport';
 
 @Module({
   imports: [
@@ -38,4 +42,31 @@ import { COOKIE_MAX_AGE } from './common/constants';
   ],
   controllers: [AuthController],
 })
-export class AuthModule {}
+export class AuthModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(
+        session({
+          secret: process.env.JWT_SECRET_KEY,
+          resave: false,
+          saveUninitialized: false,
+          store:
+            process.env.NODE_ENV === 'production'
+              ? new (connectPgSimple(session))({
+                  createTableIfMissing: true,
+                })
+              : new session.MemoryStore(),
+          cookie: {
+            httpOnly: true,
+            signed: true,
+            sameSite: 'none',
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: COOKIE_MAX_AGE,
+          },
+        }),
+        passport.initialize(),
+        passport.session(),
+      )
+      .forRoutes('*');
+  }
+}
