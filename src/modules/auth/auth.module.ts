@@ -60,7 +60,6 @@ export class AuthModule implements NestModule {
             httpOnly: true,
             // signed: true,
             path: '/',
-            domain: '.vercel.app',
             sameSite: 'none',
             secure: process.env.NODE_ENV === 'production',
             maxAge: COOKIE_MAX_AGE,
