@@ -46,12 +46,14 @@ export class SessionInterceptor implements NestInterceptor {
           return response
             .status(HttpStatus.OK)
             .redirect(
-              `${process.env.FRONTEND_BASE_URL}/redirect?to=${request.query.next}`,
+              `${process.env.FRONTEND_BASE_URL}/redirect?to=${
+                request.query.next || '/'
+              }`,
             );
         }
 
         return {
-          redirectUrl: `/redirect?to=${request.query.next}`,
+          redirectUrl: `/redirect?to=${request.query.next || '/'}`,
         };
       }),
     );
