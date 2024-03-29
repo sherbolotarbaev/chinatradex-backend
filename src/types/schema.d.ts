@@ -15,6 +15,8 @@ type User = {
   isVerified: boolean;
   createdAt: string;
   updatedAt: string;
+
+  metaData: UserMetaData[];
 };
 
 type LocationData = {

@@ -10,7 +10,7 @@ import { PrismaService } from '../prisma/prisma.service';
 
 import { CreateUserDto } from './dto';
 
-import { hash, verifyEmail } from '../../utils';
+import { hash, verifyEmail } from '../../shared';
 
 @Injectable()
 export class UsersService {

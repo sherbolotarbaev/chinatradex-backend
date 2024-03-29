@@ -6,13 +6,12 @@ import {
   InternalServerErrorException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { MailerService } from '@nestjs-modules/mailer';
 import type { Request, Response } from 'express';
 
 import { UsersService } from '../users/users.service';
-import { compare, hash } from '../../utils/bcrypt';
 import { JwtService } from '../jwt/jwt.service';
 import { PrismaService } from '../prisma/prisma.service';
-import { MailerService } from '@nestjs-modules/mailer';
 
 import {
   LoginDto,
@@ -25,7 +24,7 @@ import {
 
 import { GoogleUser } from '../auth/common/interface';
 
-import { getLocation } from '../../utils';
+import { getLocation, compare, hash } from '../../shared';
 
 @Injectable()
 export class AuthService {
