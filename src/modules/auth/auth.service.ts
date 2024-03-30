@@ -37,9 +37,9 @@ export class AuthService {
 
   async googleOAuth(
     {
-      firstName,
-      lastName,
-      photo,
+      // firstName,
+      // lastName,
+      // photo,
       email,
     }: GoogleUser,
     response: Response,
@@ -51,13 +51,13 @@ export class AuthService {
     });
 
     if (existingUser) {
-      // if (!existingUser.isVerified || !existingUser.verificationToken) {
-      //   this.sendVerificationCode(
-      //     existingUser.id,
-      //     existingUser.email,
-      //     existingUser.firstName,
-      //   );
-      // }
+      if (!existingUser.isVerified || !existingUser.verificationToken) {
+        this.sendVerificationCode(
+          existingUser.id,
+          existingUser.email,
+          existingUser.firstName,
+        );
+      }
 
       if (!existingUser.isActive) {
         return response
@@ -77,28 +77,28 @@ export class AuthService {
     //   .status(HttpStatus.UNAUTHORIZED)
     //   .redirect(`${process.env.FRONTEND_BASE_URL}/login?error=401`);
 
-    const user = await this.usersService.createUser({
-      firstName,
-      lastName,
-      photo,
-      email,
-      password: 'google-oauth',
-    });
+    // const user = await this.usersService.createUser({
+    //   firstName,
+    //   lastName,
+    //   photo,
+    //   email,
+    //   password: 'google-oauth',
+    // });
 
     // this.sendVerificationCode(user.id, user.email, user.firstName);
 
-    try {
-      return user;
-    } catch (e: any) {
-      console.error(e);
-      throw new Error(e.message);
-    }
+    // try {
+    //   return user;
+    // } catch (e: any) {
+    //   console.error(e);
+    //   throw new Error(e.message);
+    // }
   }
 
   async register(dto: RegisterDto) {
     const user = await this.usersService.createUser(dto);
 
-    // this.sendVerificationCode(user.id, user.email, user.firstName);
+    this.sendVerificationCode(user.id, user.email, user.firstName);
 
     try {
       return user;
@@ -116,9 +116,9 @@ export class AuthService {
       throw new UnauthorizedException('Неверный пароль');
     }
 
-    // if (!user.isVerified || !user.verificationToken) {
-    //   this.sendVerificationCode(user.id, user.email, user.firstName);
-    // }
+    if (!user.isVerified || !user.verificationToken) {
+      this.sendVerificationCode(user.id, user.email, user.firstName);
+    }
 
     try {
       return user;
