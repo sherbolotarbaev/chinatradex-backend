@@ -51,13 +51,13 @@ export class AuthService {
     });
 
     if (existingUser) {
-      if (!existingUser.isVerified || !existingUser.verificationToken) {
-        this.sendVerificationCode(
-          existingUser.id,
-          existingUser.email,
-          existingUser.firstName,
-        );
-      }
+      // if (!existingUser.isVerified || !existingUser.verificationToken) {
+      //   this.sendVerificationCode(
+      //     existingUser.id,
+      //     existingUser.email,
+      //     existingUser.firstName,
+      //   );
+      // }
 
       if (!existingUser.isActive) {
         return response
@@ -73,9 +73,9 @@ export class AuthService {
       }
     }
 
-    // return response
-    //   .status(HttpStatus.UNAUTHORIZED)
-    //   .redirect(`${process.env.FRONTEND_BASE_URL}/login?error=401`);
+    return response
+      .status(HttpStatus.UNAUTHORIZED)
+      .redirect(`${process.env.FRONTEND_BASE_URL}/login?error=401`);
 
     // const user = await this.usersService.createUser({
     //   firstName,
