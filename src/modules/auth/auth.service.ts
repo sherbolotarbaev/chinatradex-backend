@@ -158,7 +158,10 @@ export class AuthService {
     }
   }
 
-  async editMe(user: User, { firstName, lastName, username }: EditMeDto) {
+  async editMe(
+    user: User,
+    { firstName, lastName, username, phone }: EditMeDto,
+  ) {
     if (username && username !== user.username) {
       const existingUsername = await this.prisma.user.findUnique({
         where: {
@@ -179,6 +182,7 @@ export class AuthService {
         firstName,
         lastName,
         username: username ? username.toLowerCase() : user.username,
+        phone,
       },
       include: {
         metaData: {

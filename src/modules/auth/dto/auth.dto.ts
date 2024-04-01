@@ -3,6 +3,7 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  Matches,
   MaxLength,
   MinLength,
 } from 'class-validator';
@@ -74,6 +75,17 @@ export class EditMeDto {
     message: 'Имя пользователя не может быть длиннее 80 символов',
   })
   username?: string;
+
+  @IsOptional()
+  @IsNotEmpty({ message: 'Номер телефона не может быть пустым' })
+  @IsString({ message: 'Номер телефона должно быть строкой' })
+  @Matches(
+    /^\+?\d{1,3}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/,
+    {
+      message: 'Неверный номер телефона',
+    },
+  )
+  phone?: string;
 }
 
 export class EmailVerificationDto {
