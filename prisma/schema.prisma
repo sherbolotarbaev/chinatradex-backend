@@ -20,6 +20,7 @@ model User {
   firstName String  @db.VarChar(64)
   lastName  String  @db.VarChar(64)
   email     String  @unique
+  phone     String?
   username  String  @unique
   photo     String?
   password  String

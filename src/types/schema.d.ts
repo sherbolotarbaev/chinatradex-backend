@@ -6,6 +6,7 @@ type User = {
   firstName: string;
   lastName: string;
   email: string;
+  phone?: string;
   username: string;
   photo?: string;
   password: string;

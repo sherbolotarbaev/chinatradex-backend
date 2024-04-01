@@ -8,6 +8,7 @@ CREATE TABLE "User" (
     "firstName" VARCHAR(64) NOT NULL,
     "lastName" VARCHAR(64) NOT NULL,
     "email" TEXT NOT NULL,
+    "phone" TEXT,
     "username" TEXT NOT NULL,
     "photo" TEXT,
     "password" TEXT NOT NULL,
