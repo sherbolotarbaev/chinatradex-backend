@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
 
 import { JwtService } from '../../../jwt/jwt.service';
 
-// import { COOKIE_MAX_AGE } from '../constants';
+import { COOKIE_MAX_AGE } from '../constants';
 
 @Injectable()
 export class SessionInterceptor implements NestInterceptor {
@@ -34,14 +34,14 @@ export class SessionInterceptor implements NestInterceptor {
         const session = await this.jwtService.generateSession(user.id);
 
         response.setHeader('Authorization', `Bearer ${session}`);
-        // response.cookie('session', session, {
-        //   httpOnly: true,
-        //   signed: true,
-        //   path: '/',
-        //   sameSite: 'none',
-        //   secure: process.env.NODE_ENV === 'production',
-        //   maxAge: COOKIE_MAX_AGE,
-        // });
+        response.cookie('session', session, {
+          httpOnly: true,
+          signed: true,
+          path: '/',
+          sameSite: 'none',
+          secure: process.env.NODE_ENV === 'production',
+          maxAge: COOKIE_MAX_AGE,
+        });
 
         if (request.query.authuser) {
           return response
