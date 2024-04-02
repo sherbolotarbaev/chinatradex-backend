@@ -134,10 +134,9 @@ export class AuthService {
         throw new InternalServerErrorException('Не удалось выйти из системы');
       }
 
-      return response
-        .status(HttpStatus.OK)
-        .clearCookie('session')
-        .redirect(`${process.env.FRONTEND_BASE_URL}/redirect`);
+      return response.status(HttpStatus.OK).clearCookie('session').send({
+        redirectUrl: '/redirect',
+      });
     });
   }
 

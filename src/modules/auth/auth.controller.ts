@@ -72,7 +72,7 @@ export class AuthController {
     return user;
   }
 
-  @Get('logout')
+  @Post('logout')
   @HttpCode(HttpStatus.OK)
   async logout(@Req() request: Request, @Res() response: Response) {
     return await this.authService.logout(request, response);
