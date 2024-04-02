@@ -129,12 +129,6 @@ export class AuthService {
   }
 
   async logout(request: Request, response: Response) {
-    request.session.destroy((e: any) => {
-      if (e) {
-        throw new InternalServerErrorException('Не удалось выйти из системы');
-      }
-    });
-
     return request.logOut((e: any) => {
       if (e) {
         throw new InternalServerErrorException('Не удалось выйти из системы');
