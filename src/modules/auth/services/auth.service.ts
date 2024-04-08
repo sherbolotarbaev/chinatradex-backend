@@ -21,11 +21,14 @@ import {
   EmailVerificationDto,
   ForgotPasswordDto,
   ResetPasswordDto,
+  SendOtpDto,
+  LoginOtpDto,
 } from '../dto';
 
 import { GoogleUser } from '../../auth/common/interface';
 
 import { getLocation, compare, hash } from '../../../utils';
+import moment from 'moment';
 
 const logger = new Logger('AuthService');
 
@@ -305,6 +308,74 @@ export class AuthService {
       return {
         message: 'Ваш пароль был успешно обновлен',
       };
+    } catch (e: any) {
+      logger.error(e);
+      throw new Error(e.message);
+    }
+  }
+
+  async sendOtp({ email }: SendOtpDto) {
+    const user = await this.usersService.findByEmail(email);
+
+    const otp = await this.generateVerificationCode();
+    const otpHash = await hash(otp);
+
+    await Promise.all([
+      this.prisma.emailOtp.upsert({
+        where: {
+          email: user.email,
+        },
+        update: {
+          otp: otpHash,
+          expiresAt: moment().add(5, 'minutes').toDate(),
+        },
+        create: {
+          email: user.email,
+          otp: otpHash,
+          expiresAt: moment().add(5, 'minutes').toDate(),
+        },
+      }),
+      this.mailerService.sendMail({
+        to: user.email,
+        from: process.env.MAILER_USER,
+        subject: 'Временный пароль',
+        html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <div style="background-color: #f8f8f8; padding: 20px;">
+            <h2 style="color: #333;">Привет ${user.firstName},</h2>
+            <p style="font-size: 16px;">Ваш временный пароль:</p>
+            <div style="background-color: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 5px; margin-top: 10px;">
+              <h3 style="margin: 0; font-size: 24px; color: #007bff;">${otp}</h3>
+            </div>
+            <p style="font-size: 14px; margin-top: 15px;">Пожалуйста, используйте этот временный пароль для авторизации.</p>
+          </div>
+          <p style="font-size: 14px; color: #666; margin-top: 20px;">Это письмо было отправлено автоматически. Пожалуйста, не отвечайте.</p>
+        </div>
+        `,
+      }),
+    ]);
+  }
+
+  async loginOtp({ email, otp }: LoginOtpDto) {
+    const user = await this.usersService.findByEmail(email);
+
+    const emailOtp = await this.prisma.emailOtp.findUnique({
+      where: {
+        email: user.email,
+      },
+    });
+
+    const otpMatch = await compare(otp, emailOtp.otp);
+    if (!otpMatch) {
+      throw new BadRequestException('Неверный временный пароль');
+    }
+
+    if (moment.utc(emailOtp.expiresAt).isBefore(moment().utc())) {
+      throw new BadRequestException('Истек срок действия временного пароля');
+    }
+
+    try {
+      return user;
     } catch (e: any) {
       logger.error(e);
       throw new Error(e.message);

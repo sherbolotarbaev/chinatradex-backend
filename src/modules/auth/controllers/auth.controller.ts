@@ -35,6 +35,8 @@ import {
   EmailVerificationDto,
   ForgotPasswordDto,
   ResetPasswordDto,
+  SendOtpDto,
+  LoginOtpDto,
 } from '../dto';
 
 @Controller()
@@ -111,5 +113,20 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async resetPassword(@Body() dto: ResetPasswordDto) {
     return await this.authService.resetPassword(dto);
+  }
+
+  @Public()
+  @Post('/send-otp')
+  @HttpCode(HttpStatus.OK)
+  async sendOtp(@Body() dto: SendOtpDto) {
+    return await this.authService.sendOtp(dto);
+  }
+
+  @Public()
+  @Post('/login-otp')
+  @HttpCode(HttpStatus.OK)
+  @UseInterceptors(SessionInterceptor)
+  async loginOtp(@Body() dto: LoginOtpDto) {
+    return await this.authService.loginOtp(dto);
   }
 }
