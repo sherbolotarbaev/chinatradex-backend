@@ -2,10 +2,13 @@ import {
   BadRequestException,
   Injectable,
   NotFoundException,
+  Logger,
 } from '@nestjs/common';
 
 import { SupabaseService } from '../../supabase/services';
 import { PrismaService } from '../../prisma/services';
+
+const logger = new Logger('UploadService');
 
 @Injectable()
 export class UploadService {
@@ -47,7 +50,7 @@ export class UploadService {
         photo: updatedUser.photo,
       };
     } catch (e: any) {
-      console.error(e);
+      logger.error(e);
       throw new Error(e.message);
     }
   }

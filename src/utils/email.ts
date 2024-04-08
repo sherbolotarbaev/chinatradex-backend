@@ -1,4 +1,8 @@
+import { Logger } from '@nestjs/common';
+
 import axios from 'axios';
+
+const logger = new Logger('verifyEmail');
 
 export const verifyEmail = async (email: string) => {
   try {
@@ -14,7 +18,7 @@ export const verifyEmail = async (email: string) => {
       data.result === 'deliverable'
     );
   } catch (e) {
-    console.error('Error verifying email:', e);
+    logger.error('Error verifying email:', e);
     return false;
   }
 };

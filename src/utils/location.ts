@@ -1,6 +1,10 @@
+import { Logger } from '@nestjs/common';
+
 import IPinfo from 'node-ipinfo';
 
 const iPinfo = new IPinfo(process.env.IP_INFO_SECRET_KEY);
+
+const logger = new Logger('getLocation');
 
 export const getLocation = async (ip: string): Promise<LocationData> => {
   try {
@@ -18,6 +22,6 @@ export const getLocation = async (ip: string): Promise<LocationData> => {
 
     return locationData;
   } catch (e: any) {
-    console.error('Error get location:', e);
+    logger.error('Error receiving location:', e);
   }
 };

@@ -3,8 +3,9 @@ import {
   ConflictException,
   HttpStatus,
   Injectable,
-  InternalServerErrorException,
   UnauthorizedException,
+  InternalServerErrorException,
+  Logger,
 } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import type { Request, Response } from 'express';
@@ -25,6 +26,8 @@ import {
 import { GoogleUser } from '../../auth/common/interface';
 
 import { getLocation, compare, hash } from '../../../utils';
+
+const logger = new Logger('AuthService');
 
 @Injectable()
 export class AuthService {
@@ -68,7 +71,7 @@ export class AuthService {
       try {
         return existingUser;
       } catch (e: any) {
-        console.error(e);
+        logger.error(e);
         throw new Error(e.message);
       }
     }
@@ -90,7 +93,7 @@ export class AuthService {
     // try {
     //   return user;
     // } catch (e: any) {
-    //   console.error(e);
+    //   logger.error(e);
     //   throw new Error(e.message);
     // }
   }
@@ -103,7 +106,7 @@ export class AuthService {
     try {
       return user;
     } catch (e) {
-      console.error(e);
+      logger.error(e);
       throw new Error(e.message);
     }
   }
@@ -123,7 +126,7 @@ export class AuthService {
     try {
       return user;
     } catch (e) {
-      console.error(e);
+      logger.error(e);
       throw new Error(e.message);
     }
   }
@@ -155,7 +158,7 @@ export class AuthService {
     try {
       return user;
     } catch (e: any) {
-      console.error(e);
+      logger.error(e);
       throw new Error(e.message);
     }
   }
@@ -207,7 +210,7 @@ export class AuthService {
     try {
       return updatedUser;
     } catch (e: any) {
-      console.error(e);
+      logger.error(e);
       throw new Error(e.message);
     }
   }
@@ -235,7 +238,7 @@ export class AuthService {
 
       return { success: true };
     } catch (e: any) {
-      console.error(e);
+      logger.error(e);
       throw new Error(e.message);
     }
   }
@@ -273,7 +276,7 @@ export class AuthService {
         message: `Ссылка для сброса пароля была отправлена ${user.email}`,
       };
     } catch (e: any) {
-      console.error(e);
+      logger.error(e);
       throw new Error(e.message);
     }
   }
@@ -303,7 +306,7 @@ export class AuthService {
         message: 'Ваш пароль был успешно обновлен',
       };
     } catch (e: any) {
-      console.error(e);
+      logger.error(e);
       throw new Error(e.message);
     }
   }

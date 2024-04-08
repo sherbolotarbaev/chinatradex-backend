@@ -2,9 +2,12 @@ import {
   Injectable,
   BadRequestException,
   ServiceUnavailableException,
+  Logger,
 } from '@nestjs/common';
 
 import { SupabaseClient, createClient } from '@supabase/supabase-js';
+
+const logger = new Logger('SupabaseService');
 
 @Injectable()
 export class SupabaseService {
@@ -19,7 +22,7 @@ export class SupabaseService {
     const SUPABASE_SECRET_KEY = process.env.SUPABASE_SECRET_KEY;
 
     if (!SUPABASE_URL || !SUPABASE_SECRET_KEY) {
-      throw new Error('Supabase URL and Secret Key are required');
+      logger.error('Supabase URL and Secret Key are required');
     }
 
     this.supabase = createClient(SUPABASE_URL, SUPABASE_SECRET_KEY, {
@@ -49,7 +52,7 @@ export class SupabaseService {
 
       return data.path;
     } catch (e: any) {
-      console.error('Error uploading file to Supabase: ', e.message);
+      logger.error('Error uploading file to Supabase: ', e.message);
       throw new ServiceUnavailableException('Не удалось загрузить файл');
     }
   }

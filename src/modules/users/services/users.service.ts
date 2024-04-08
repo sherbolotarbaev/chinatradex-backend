@@ -4,6 +4,7 @@ import {
   ForbiddenException,
   Injectable,
   UnauthorizedException,
+  Logger,
 } from '@nestjs/common';
 
 import { PrismaService } from '../../prisma/services';
@@ -11,6 +12,8 @@ import { PrismaService } from '../../prisma/services';
 import { CreateUserDto } from '../dto';
 
 import { hash, verifyEmail } from '../../../utils';
+
+const logger = new Logger('UsersService');
 
 @Injectable()
 export class UsersService {
@@ -64,7 +67,7 @@ export class UsersService {
         users,
       };
     } catch (e: any) {
-      console.error(e);
+      logger.error(e);
       throw new Error(e.message);
     }
   }
@@ -84,7 +87,7 @@ export class UsersService {
     try {
       return this.findByUsername(username);
     } catch (e: any) {
-      console.error(e);
+      logger.error(e);
       throw new Error(e.message);
     }
   }
@@ -118,7 +121,7 @@ export class UsersService {
 
       return { success: true };
     } catch (e: any) {
-      console.error(e);
+      logger.error(e);
       throw new Error(e.message);
     }
   }
@@ -165,7 +168,7 @@ export class UsersService {
 
       return user;
     } catch (e: any) {
-      console.error(e);
+      logger.error(e);
       throw new Error(e.message);
     }
   }
@@ -200,7 +203,7 @@ export class UsersService {
     try {
       return user;
     } catch (e: any) {
-      console.error(e);
+      logger.error(e);
       throw new Error(e.message);
     }
   }
@@ -238,7 +241,7 @@ export class UsersService {
     try {
       return user;
     } catch (e: any) {
-      console.error(e);
+      logger.error(e);
       throw new Error(e.message);
     }
   }
@@ -273,7 +276,7 @@ export class UsersService {
     try {
       return user;
     } catch (e: any) {
-      console.error(e);
+      logger.error(e);
       throw new Error(e.message);
     }
   }
@@ -308,7 +311,7 @@ export class UsersService {
     try {
       return user;
     } catch (e: any) {
-      console.error(e);
+      logger.error(e);
       throw new Error(e.message);
     }
   }
