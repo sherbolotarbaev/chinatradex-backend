@@ -28,6 +28,7 @@ import passport from 'passport';
       },
       verifyOptions: {
         algorithms: ['HS384'],
+        ignoreExpiration: false,
       },
     }),
     PassportModule.register({ defaultStrategy: 'jwt', session: true }),
