@@ -23,7 +23,7 @@ import passport from 'passport';
     JwtModule.register({
       secret: process.env.JWT_SECRET_KEY,
       signOptions: {
-        expiresIn: COOKIE_MAX_AGE,
+        expiresIn: '30m',
         algorithm: 'HS384',
       },
       verifyOptions: {
