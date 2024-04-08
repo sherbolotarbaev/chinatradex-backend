@@ -42,3 +42,11 @@ type UserMetaData = {
   timezone?: string;
   lastVisit: string;
 };
+
+type EmailOtp = {
+  id: number;
+  email: string;
+  otp: string;
+  expiresAt: string;
+  createdAt: string;
+}
