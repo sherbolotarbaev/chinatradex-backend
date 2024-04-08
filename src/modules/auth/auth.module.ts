@@ -14,9 +14,9 @@ import {
 } from './common';
 import { COOKIE_MAX_AGE } from './common/constants';
 
-import * as connectPgSimple from 'connect-pg-simple';
-import * as session from 'express-session';
-import * as passport from 'passport';
+import connectPgSimple from 'connect-pg-simple';
+import session from 'express-session';
+import passport from 'passport';
 
 @Module({
   imports: [
