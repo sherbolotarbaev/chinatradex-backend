@@ -354,6 +354,15 @@ export class AuthService {
         `,
       }),
     ]);
+
+    try {
+      return {
+        email: user.email,
+      };
+    } catch (e: any) {
+      logger.error(e);
+      throw new Error(e.message);
+    }
   }
 
   async loginOtp({ email, otp }: LoginOtpDto) {
