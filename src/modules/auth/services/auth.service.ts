@@ -9,9 +9,9 @@ import {
 import { MailerService } from '@nestjs-modules/mailer';
 import type { Request, Response } from 'express';
 
-import { UsersService } from '../users/users.service';
-import { JwtService } from '../jwt/jwt.service';
-import { PrismaService } from '../prisma/prisma.service';
+import { UsersService } from '../../users/services';
+import { JwtService } from '../../jwt/services';
+import { PrismaService } from '../../prisma/services';
 
 import {
   LoginDto,
@@ -20,11 +20,11 @@ import {
   EmailVerificationDto,
   ForgotPasswordDto,
   ResetPasswordDto,
-} from './dto';
+} from '../dto';
 
-import { GoogleUser } from '../auth/common/interface';
+import { GoogleUser } from '../../auth/common/interface';
 
-import { getLocation, compare, hash } from '../../shared';
+import { getLocation, compare, hash } from '../../../utils';
 
 @Injectable()
 export class AuthService {
@@ -51,7 +51,7 @@ export class AuthService {
     });
 
     if (existingUser) {
-      // if (!existingUser.isVerified || !existingUser.verificationToken) {
+      // if (!existingUser.isVerified) {
       //   this.sendVerificationCode(
       //     existingUser.id,
       //     existingUser.email,
@@ -110,15 +110,15 @@ export class AuthService {
 
   async login({ emailOrUsername, password }: LoginDto) {
     const user = await this.usersService.findByEmailOrUsername(emailOrUsername);
-    const comparedPassword = await compare(password, user.password);
+    const passwordMatch = await compare(password, user.password);
 
-    if (!comparedPassword) {
+    if (!passwordMatch) {
       throw new UnauthorizedException('Неверный пароль');
     }
 
-    if (!user.isVerified || !user.verificationToken) {
-      this.sendVerificationCode(user.id, user.email, user.firstName);
-    }
+    // if (!user.isVerified) {
+    //   this.sendVerificationCode(user.id, user.email, user.firstName);
+    // }
 
     try {
       return user;

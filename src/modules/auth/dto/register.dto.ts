@@ -1,13 +1,12 @@
 import {
   IsEmail,
   IsNotEmpty,
-  IsOptional,
   IsString,
   MaxLength,
   MinLength,
 } from 'class-validator';
 
-export class CreateUserDto {
+export class RegisterDto {
   @IsNotEmpty({ message: 'Имя не может быть пустым' })
   @IsString({ message: 'Имя должно быть строкой' })
   @MinLength(2, { message: 'Имя должно содержать не менее 2 символов' })
@@ -31,9 +30,4 @@ export class CreateUserDto {
   })
   @MaxLength(16, { message: 'Пароль не может быть длиннее 16 символов' })
   password: string;
-
-  @IsOptional()
-  @IsNotEmpty({ message: 'Фото не может быть пустым' })
-  @IsString({ message: 'Фотография должна быть строкой' })
-  photo?: string;
 }

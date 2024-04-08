@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
 
-import { AuthService } from './auth.service';
+import { AuthService } from '../services';
 
 import {
   SessionInterceptor,
@@ -25,9 +25,9 @@ import {
   User,
   Ip,
   Public,
-} from './common';
+} from '../common';
 
-import { GoogleUser } from './common/interface';
+import { GoogleUser } from '../common/interface';
 
 import {
   RegisterDto,
@@ -35,7 +35,7 @@ import {
   EmailVerificationDto,
   ForgotPasswordDto,
   ResetPasswordDto,
-} from './dto';
+} from '../dto';
 
 @Controller()
 @UseGuards(SessionAuthGuard, JWTAuthGuard)

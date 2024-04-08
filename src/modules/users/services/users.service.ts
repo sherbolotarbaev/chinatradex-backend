@@ -6,11 +6,11 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../../prisma/services';
 
-import { CreateUserDto } from './dto';
+import { CreateUserDto } from '../dto';
 
-import { hash, verifyEmail } from '../../shared';
+import { hash, verifyEmail } from '../../../utils';
 
 @Injectable()
 export class UsersService {

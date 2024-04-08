@@ -3,6 +3,7 @@ import {
   BadRequestException,
   ServiceUnavailableException,
 } from '@nestjs/common';
+
 import { SupabaseClient, createClient } from '@supabase/supabase-js';
 
 @Injectable()
@@ -57,7 +58,9 @@ export class SupabaseService {
     const maxSize = 15 * 1024 * 1024; // 15 MB
 
     if (file.size > maxSize) {
-      throw new BadRequestException('Размер файла превышает ограничение в 15 МБ');
+      throw new BadRequestException(
+        'Размер файла превышает ограничение в 15 МБ',
+      );
     }
 
     const filename = this.generateUniqueFileName(file.originalname, userId);

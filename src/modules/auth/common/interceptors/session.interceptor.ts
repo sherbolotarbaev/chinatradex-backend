@@ -10,7 +10,7 @@ import type { Request, Response } from 'express';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { JwtService } from '../../../jwt/jwt.service';
+import { JwtService } from '../../../jwt/services';
 
 import { COOKIE_MAX_AGE } from '../constants';
 

@@ -3,11 +3,11 @@ import { ConfigModule } from '@nestjs/config';
 
 import {
   AuthModule,
-  UsersModule,
-  PrismaModule,
   JwtModule,
+  PrismaModule,
   SupabaseModule,
   UploadModule,
+  UsersModule,
 } from './modules';
 
 import { CacheModule } from '@nestjs/cache-manager';
@@ -35,11 +35,11 @@ import { AppController } from './app.controller';
       },
     }),
     AuthModule,
-    UsersModule,
-    PrismaModule,
     JwtModule,
+    PrismaModule,
     SupabaseModule,
     UploadModule,
+    UsersModule,
   ],
   controllers: [AppController],
 })

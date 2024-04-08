@@ -12,9 +12,9 @@ import {
 } from '@nestjs/common';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 
-import { UsersService } from './users.service';
+import { UsersService } from '../services';
 
-import { SessionAuthGuard, JWTAuthGuard, User } from '../auth/common';
+import { SessionAuthGuard, JWTAuthGuard, User } from '../../auth/common';
 
 @Controller('users')
 @UseGuards(SessionAuthGuard, JWTAuthGuard)

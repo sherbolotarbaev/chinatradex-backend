@@ -2,9 +2,9 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
-import { UsersService } from '../users/users.service';
+import { AuthController } from './controllers';
+import { AuthService } from './services';
+import { UsersService } from '../users/services';
 
 import {
   JwtStrategy,
@@ -14,9 +14,9 @@ import {
 } from './common';
 import { COOKIE_MAX_AGE } from './common/constants';
 
-import connectPgSimple from 'connect-pg-simple';
-import session from 'express-session';
-import passport from 'passport';
+import * as connectPgSimple from 'connect-pg-simple';
+import * as session from 'express-session';
+import * as passport from 'passport';
 
 @Module({
   imports: [

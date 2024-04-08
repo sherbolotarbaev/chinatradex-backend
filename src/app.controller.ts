@@ -9,7 +9,8 @@ import {
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
 
-import { getLocation } from './shared';
+import { getLocation } from './utils';
+
 import moment from 'moment';
 import 'moment-timezone';
 

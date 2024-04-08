@@ -4,8 +4,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
-import { SupabaseService } from '../supabase/supabase.service';
-import { PrismaService } from '../prisma/prisma.service';
+import { SupabaseService } from '../../supabase/services';
+import { PrismaService } from '../../prisma/services';
 
 @Injectable()
 export class UploadService {
@@ -44,7 +44,7 @@ export class UploadService {
 
     try {
       return {
-        photo: updatedUser.photo
+        photo: updatedUser.photo,
       };
     } catch (e: any) {
       console.error(e);

@@ -10,9 +10,9 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 
-import { UploadService } from './upload.service';
+import { UploadService } from '../services';
 
-import { SessionAuthGuard, JWTAuthGuard, User } from '../auth/common';
+import { SessionAuthGuard, JWTAuthGuard, User } from '../../auth/common';
 
 @Controller('upload')
 @UseGuards(SessionAuthGuard, JWTAuthGuard)
